@@ -15,8 +15,8 @@ class TestLoginPage():
     def test_login(self, driver):
         login_page = loginPage(driver)
         login_page.open()
-        wait = WebDriverWait(driver, 5)
-        wait.until(EC.visibility_of_element_located(login_page.login_field))
+        # wait = WebDriverWait(driver, 5)
+        # wait.until(EC.visibility_of_element_located(login_page.login_field))
         personal_page = login_page.enter_cridentials()
         personal_page.assert_page_is_opened()
 
@@ -35,6 +35,8 @@ class TestLoginPage():
         login_page = loginPage(driver)
         login_page.open()
         login_page.change_language()
+
+        assert 
 
     def test_incorrect_login(self, driver):
         login_page = loginPage(driver)

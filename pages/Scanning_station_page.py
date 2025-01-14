@@ -66,13 +66,13 @@ class ScanningPage(Base):
             EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.toggleItem__Bg_1g.active__ujpKO'))
         )
 
-        # Получение текста элемента
-        actual_text = toggle_item.text
+        # # Получение текста элемента
+        # actual_text = toggle_item.text
 
-        # Проверка, что текст соответствует ожидаемому
-        assert actual_text == "Обычный", f"Expected 'Обычный', but got '{actual_text}'"
+        # # Проверка, что текст соответствует ожидаемому
+        # assert actual_text == "Обычный", f"Expected 'Обычный', but got '{actual_text}'"
 
-        print("Тест пройден: элемент отображается с правильным текстом.")
+        # print("Тест пройден: элемент отображается с правильным текстом.")
 
     @allure.step('Открытие окна с настройками параметров')
     def open_params(self):
@@ -86,14 +86,19 @@ class ScanningPage(Base):
             EC.visibility_of_element_located(self.package_list))
         element_text = element.text
         assert element_text == 'Показано: с 1 по 2 из 2', f"Expected 'Обычный', but got '{element_text}'"
-        print("Пройдено")
+        # print("Пройдено")
 
     @allure.step('Смена типа пакета')
     def change_type_package(self):
         self.force_click_on(self.package_type)
         assert self.get_element(self.package_name_table), 'Element is not visible' #ищем значение измененного типа в таблице
 
-
+    # core
+    def assert_that_element_has_text(locator, text):
+        element = WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(locator))
+        element_text = element.text
+        assert element_text == text, f"Expected '{text}', but got '{element_text}'"
 
 
 

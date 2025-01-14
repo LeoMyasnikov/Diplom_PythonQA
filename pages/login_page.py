@@ -9,6 +9,12 @@ from data.cridentials import DOMAIN
 from pages.Personal_page import PersonalPage
 from pages.Scanning_station_page import ScanningPage
 
+    login = 'admin'
+    password = 'password'
+    login_test = 'test'
+    incorrect_password = 'password1234'
+    incorrect_login = 'blabla'
+    login_with_default_password = 'bad_login'
 
 class loginPage(Base):
 
@@ -17,16 +23,17 @@ class loginPage(Base):
     login_field = (By.ID, 'userName')
     password_field = (By.ID, 'password')
     button_entrance = (By.CSS_SELECTOR, '[value="Войти"]')
+    language_hover = (By.XPATH, "//a[text()='English']")
+    error_message_login = (By.CSS_SELECTOR, ".validator[data-bind='text: ErrorMessage']")
+    button_help = (By.CSS_SELECTOR, '[href="https://help.contentai.ru/content-capture"]')
+    сopyright_check = (By.CSS_SELECTOR, "#MainFooter .footer_copyright")
+
     login = 'admin'
     password = 'password'
     login_test = 'test'
     incorrect_password = 'password1234'
     incorrect_login = 'blabla'
     login_with_default_password = 'bad_login'
-    language_hover = (By.XPATH, "//a[text()='English']")
-    error_message_login = (By.CSS_SELECTOR, ".validator[data-bind='text: ErrorMessage']")
-    button_help = (By.CSS_SELECTOR, '[href="https://help.contentai.ru/content-capture"]')
-    сopyright_check = (By.CSS_SELECTOR, "#MainFooter .footer_copyright")
 
     def __init__(self, driver):
         self.driver: WebDriver = driver
@@ -34,6 +41,7 @@ class loginPage(Base):
         self.page = f'{DOMAIN}Login/#/Login' # добавка к основному урлу ведущая на персональную страницу
 
         self.page_scanning = f'{DOMAIN}Scanning/'
+        
 
     @allure.step('Open "Login" page')
     def open(self):
@@ -50,14 +58,18 @@ class loginPage(Base):
 
     @allure.step('Authorization')
     def enter_cridentials(self):
+        # setup and turndown
         self.fill_input(self.login_field, self.login)
         self.fill_input(self.password_field, self.password)
         self.click_on(self.button_entrance)
+        
+    # for test
         personal_page = PersonalPage(self.driver)
         return personal_page
 
     @allure.step('Ввод дефолтного пароля для проверка запроса смены')
     def enter_default_cridentials(self):
+        # мимо
         from Homework_page_object.pages.Edit_page import EditPage #для избегания проблем с инициализацией
         self.fill_input(self.login_field, self.login_with_default_password)
         self.fill_input(self.password_field, self.password)
@@ -86,7 +98,7 @@ class loginPage(Base):
     @allure.step('Сhange language')
     def change_language(self):
         self.force_click_on(self.language_hover)
-        time.sleep(7)
+        WebDriverWait(driver, 7).until(EC.title_is(help_name))
         assert self.driver.title == 'Log In to ContentCapture'
 
     @allure.step('Ввод неверного логина')
@@ -112,9 +124,15 @@ class loginPage(Base):
 
         # Явное ожидание заголовка
         help_name = 'Справка ContentCapture®'
-        WebDriverWait(driver, 7).until(EC.title_is(help_name))
+        
         assert driver.title == help_name
 
+    # core
+    def asser_title(title):
+        WebDriverWait(driver, 7).until(EC.title_is(help_name))
+        assert driver.title == help_name, "Message"
+
+    
     @allure.step('Проверка копирайта')
     def copywriting_check(self):
         footer_copyright = WebDriverWait(self.driver, 5).until(

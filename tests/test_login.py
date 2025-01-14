@@ -28,6 +28,7 @@ class TestLoginPage():
     def test_edit_password_after_default(self, driver):
         login_page = loginPage(driver)
         login_page.open()
+        # no
         edit_page = login_page.enter_default_cridentials()
         edit_page.assert_edit_page_is_opened()
 

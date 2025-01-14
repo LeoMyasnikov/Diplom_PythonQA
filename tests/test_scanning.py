@@ -2,7 +2,7 @@ import allure
 from pages.login_page import loginPage
 
 @allure.feature('ScanningPage')
-class TestScanningPage():
+class TestScanningPage:
 
     def test_open_scanning_page(self, driver):
         login_page = loginPage(driver)

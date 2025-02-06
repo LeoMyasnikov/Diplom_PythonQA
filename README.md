@@ -20,13 +20,15 @@
 4. Установите зависимости: pip install pytest allure-pytest
 
 ## Использование
-Чтобы запустить все тесты: python -m pytest tests --alluredir allure-results 
-Чтобы запустить конкретный тест: python -m pytest tests/test_example.py --alluredir allure-results
-Чтобы сгенерировать отчет о тестах: allure generate /allure-results --clean -o ./allure-report
-Чтобы открыть отчет: allure open ./allure-report
+- Чтобы запустить все ui тесты: python -m pytest tests --alluredir allure-results 
+- Чтобы запустить конкретный тест: python -m pytest tests/test_example.py --alluredir allure-results
+- Для запуска api тестов: python -m pytest Api/tests
+- Чтобы сгенерировать отчет о тестах: allure generate /allure-results --clean -o ./allure-report
+- Чтобы открыть отчет: allure open ./allure-report
 
 
 ## Структура тестов
+
 - `сore/`: Содержит базовые классы, которые используются во всем проекте
   -`base`: Содержит общие методы, такие как поиск элементов, проверки видимости, ввод текста и т.д
 
@@ -44,6 +46,27 @@
   - `test_edit_page.py`: Представляет собой набор автоматизированных тестов для страницы редактирования пользовательских данных
   - `test_login_page.py`: Представляет собой набор автоматизированных тестов для страницы авторизации
   - `test_scanning_page.py`: Представляет собой набор автоматизированных тестов для страницы сканирования
+
+
+- `Api/`: Cодержит api тесты на сторонний сервис petstore
+  - `base`:
+    -`base_service.py`: Базовый класс для всех сервисов
+    - `assertions.py`: Класс для универсальных ассертов
+  - `data/`:
+    - `pet_data.py`: Данные для тестов pets
+    - `user_data.py`: Данные для тестов users
+    - `store_data.py`: Данные для тестов store
+  - `services/`:
+    - `pet_service.py `: Реализация методов для pets
+    - `user_service.py`: Реализация методов для users
+    - `store_service.p`: Реализация методов для store
+  - `tests/`:
+    - `test_pet.py `:  Cодержит фикстуру для создания заказа перед тестом
+    - `test_pet.py `: Реализация методов для pets
+    - `test_user.py`: Реализация методов для users
+    - `test_store.py`: Реализация методов для store
+
+
 
 - `allure-report/`: Папка для результатов Allure
 

@@ -36,7 +36,8 @@ class LoginPage(Base):
 
     @allure.step('Проверка открытия страницы логина')
     def assert_page_is_opened(self):
-        self.assert_element_is_visible(self.login_page)
+        expected_text = 'Войти'
+        self.element_visibility(self.login_page, expected_text)
 
     @allure.step('Авторизация')
     def enter_credentials(self):

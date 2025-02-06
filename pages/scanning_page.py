@@ -32,7 +32,7 @@ class ScanningPage(Base):
 
     def __init__(self, driver):
         self.driver: WebDriver = driver
-        self.page = f'{DOMAIN}Scanning/' # добавка к основному урлу ведущая на персональную страницу
+        self.page = f'{DOMAIN}Scanning/'  # добавка к основному урлу ведущая на персональную страницу
 
     @allure.step('Открытие страницы сканирования')
     def open_scanning(self):
@@ -40,7 +40,7 @@ class ScanningPage(Base):
 
     @allure.step('Убеждаемся, что открылась именно страница сканирования')
     def assert_scanning_page_is_opened(self):
-       assert self.get_element(self.scanning_page), 'Element is not visible'
+        assert self.get_element(self.scanning_page), 'Element is not visible'
 
     @allure.step('Выбор определенного проекта')
     def project_choice(self):
@@ -100,7 +100,8 @@ class ScanningPage(Base):
         self.force_click_on(self.package_type)
 
     def assert_change_type_package(self):
-        self.assert_element_is_visible(self.package_name_table)
+        expected_text = 'lev'
+        self.element_visibility(self.package_name_table, expected_text)
 
     @allure.step('Создание пакета')
     def create_batch(self):
@@ -139,12 +140,17 @@ class ScanningPage(Base):
         locators = {
             "select_name": (By.XPATH, "//div[text()='Пакеты, которые были созданы...']"),
             "date_first_field": (
-            By.XPATH, "(//div[@class='react-datepicker-wrapper']//input[@class='datepicker__vh7H_'])[1]"),
+                By.XPATH, "(//div[@class='react-datepicker-wrapper']//input[@class='datepicker__vh7H_'])[1]"
+            ),
             "date_second_field": (
-            By.XPATH, "(//div[@class='react-datepicker-wrapper']//input[@class='datepicker__vh7H_'])[2]"),
-            "date_first_calendar": (By.CSS_SELECTOR,
-                                    '[class="react-datepicker__day react-datepicker__day--003"]'),
-            "date_second_calendar": (By.CSS_SELECTOR, '[class="react-datepicker__day react-datepicker__day--005"]')
+                By.XPATH, "(//div[@class='react-datepicker-wrapper']//input[@class='datepicker__vh7H_'])[2]"
+            ),
+            "date_first_calendar": (
+                By.CSS_SELECTOR, '[class="react-datepicker__day react-datepicker__day--003"]'
+            ),
+            "date_second_calendar": (
+                By.CSS_SELECTOR, '[class="react-datepicker__day react-datepicker__day--005"]'
+            )
         }
 
         # Клик по элементам в последовательности
@@ -168,7 +174,7 @@ class ScanningPage(Base):
     def get_task_rescanning(self):
         self.click_on(self.rescan_page)
         batch_name = (By.XPATH, "//div[contains(text(), 'Пакет2')]")
-        time.sleep(3) #работает только с time.sleep, почему-то. Хотя в методе click_on есть ожидание EC
+        time.sleep(3)  # работает только с time.sleep, почему-то. Хотя в методе click_on есть ожидание EC
         self.click_on(batch_name)
 
     def assert_get_task_rescanning(self):
@@ -181,14 +187,19 @@ class ScanningPage(Base):
         add_file_element = (By.CSS_SELECTOR, 'input[type="file"]')
         file_path = 'C:/capture/htmlimage.png'
         time.sleep(3)
-        self.driver.execute_script("arguments[0].style.display = 'block';",
-                                             self.get_element(add_file_element))
+        self.driver.execute_script(
+            "arguments[0].style.display = 'block';",
+            self.get_element(add_file_element)
+        )
         self.fill_input(add_file_element, file_path)
 
     def assert_upload_document(self):
         element = (By.XPATH, "//div[@class='batchEditorInfo__ZPL5X']")
         expected_text = 'Документы: 1\nСтраницы: 1'
         self.element_visibility(element, expected_text)
+
+
+
 
 
 

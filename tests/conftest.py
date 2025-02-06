@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope = 'function')
 def driver():
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_experimental_option("prefs", {

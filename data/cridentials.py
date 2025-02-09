@@ -1,1 +1,1 @@
-DOMAIN = 'http://myasnikovhost//ContentCapture/'
+DOMAIN = 'http://myasnikovhost/ContentCapture/'

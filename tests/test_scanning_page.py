@@ -44,6 +44,7 @@ class TestScanningPage:
         scanning_page.project_choice()
         scanning_page.open_params()
         scanning_page.choice_priority()
+        scanning_page.assert_choice_priority()
 
     @allure.story("Проверка обновления пакетов")
     @allure.severity(allure.severity_level.NORMAL)
@@ -54,6 +55,7 @@ class TestScanningPage:
         login_page.enter_credentials()
         scanning_page.project_choice()
         scanning_page.package_update()
+        scanning_page.assert_package_update()
 
     @allure.story("Проверка изменения типа пакета")
     @allure.severity(allure.severity_level.NORMAL)

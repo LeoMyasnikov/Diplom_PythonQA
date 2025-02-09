@@ -14,7 +14,7 @@ class Base:
         element = self.get_element(selector)
         assert element.is_displayed(), f"Element {selector} is not visible"
 
-    def element_visibility(self, selector, text, timeout=5):
+    def element_visibility(self, selector, text=None, timeout=5):
         element = WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located(selector),
             message=f"Element with locator {selector} is not visible within {timeout} seconds"
